@@ -1,0 +1,24 @@
+{
+  "name": "mu-plugins/wp-base-services",
+  "require": {
+    "php": "^8.2",
+    "php-di/php-di": "^7",
+    "nesbot/carbon": "^3.3",
+    "monolog/monolog": "^3.6",
+    "phpmailer/phpmailer": "^6.9",
+    "illuminate/validation": "^11.6",
+    "eftec/bladeone": "^4.13",
+    "illuminate/database": "^11.6",
+    "peppeocchi/php-cron-scheduler": "^4.0",
+    "firebase/php-jwt": "^6.10",
+    "vlucas/phpdotenv": "^5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "FalconBaseServices\\": "app/"
+    }
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^7"
+  }
+}
