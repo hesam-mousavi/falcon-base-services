@@ -13,8 +13,10 @@ This plugin provide some most used services like:
 - Carbon
 <br>
 and some Helpers to develop your plugin fast.
+
 ___
 ### #PHP:
+
 php >=8.2
 
 ___
@@ -144,11 +146,11 @@ QBuilder::table('wp_posts')->get();
 ~~~
 ___
 ### #Login | Logout
-some usefully route created for login/logout with ajax or api. please see <code>app/Rotes.php</code>
+some usefully route created for login/logout with ajax or api. please see <code>app/Routes.php</code>
 
 ___
 ### #Scheduler
-do you use cron_jobs? No more need to use boring ways in cPanel.<br>
+do you use cronjob? No more need to use boring ways in cPanel.<br>
 All you need from now on is that create just one cron in cpanel that check every one minute <code>app/scheduler.php</code> file.<br>
 now with <code>[peppeocchi/php-cron-scheduler](https://github.com/peppeocchi/php-cron-scheduler)</code> package in <code>app/scheduler.php</code> file, write your jobs!!!
 
