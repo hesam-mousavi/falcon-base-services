@@ -1,5 +1,5 @@
 {
-  "name": "mu-plugins/wp-base-services",
+  "name": "mu-plugins/falcon-base-services",
   "require": {
     "php": "^8.2",
     "php-di/php-di": "^7",
