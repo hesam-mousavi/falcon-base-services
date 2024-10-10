@@ -133,7 +133,7 @@ class FalconContainer extends Singleton implements ContainerInterface
         $dependencies = [];
 
         foreach ($parameters as $parameter) {
-            $dependencyClass = $parameter->getType(); // Updated to getType() for PHP 8.2
+            $dependencyClass = $parameter->getType();
             if ($dependencyClass && !$dependencyClass->isBuiltin()) { // Check if it's a class and not a built-in type
                 $dependencies[] = $this->get($dependencyClass->getName());
             }
