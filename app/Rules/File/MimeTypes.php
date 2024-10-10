@@ -25,11 +25,11 @@ class MimeTypes implements ValidationRule
 
                 if (
                     (
-                        is_array($this->mime_types)
-                        && !in_array($mime, $this->mime_types)
+                        \is_array($this->mime_types)
+                        && !\in_array($mime, $this->mime_types)
                     )
                     || (
-                        !is_array($this->mime_types)
+                        !\is_array($this->mime_types)
                         && $mime != $this->mime_types
                     )
                 ) {
@@ -41,7 +41,7 @@ class MimeTypes implements ValidationRule
         if (!$valid) {
             $fail('validation.media.mime')->translate(
                 [
-                    'mimes' => is_array($this->mime_types) ? implode(', ', $this->mime_types) : $this->mime_types,
+                    'mimes' => \is_array($this->mime_types) ? \implode(', ', $this->mime_types) : $this->mime_types,
                 ],
             );
         }

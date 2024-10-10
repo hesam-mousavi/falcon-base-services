@@ -2,7 +2,10 @@
 
 namespace FalconBaseServices;
 
+use FalconBaseServices\Http\Controllers\Public\LoginController;
+use FalconBaseServices\Http\Controllers\Public\UserController;
 use FalconBaseServices\Services\CurrentUser;
+use WP_REST_Server;
 
 class Routes
 {
@@ -31,7 +34,7 @@ class Routes
             'auth' => [
                 [
                     'end_point' => 'login',
-                    'methods' => \WP_REST_Server::CREATABLE,
+                    'methods' => WP_REST_Server::CREATABLE,
                     'callback' => [$this, 'login'],
                     'permission' => function ($request) {
                         return true;
@@ -39,7 +42,7 @@ class Routes
                 ],
                 [
                     'end_point' => 'getToken',
-                    'methods' => \WP_REST_Server::CREATABLE,
+                    'methods' => WP_REST_Server::CREATABLE,
                     'callback' => [$this, 'getToken'],
                     'permission' => function ($request) {
                         return CurrentUser::authorized();
@@ -47,7 +50,7 @@ class Routes
                 ],
                 [
                     'end_point' => 'logout',
-                    'methods' => \WP_REST_Server::CREATABLE,
+                    'methods' => WP_REST_Server::CREATABLE,
                     'callback' => [$this, 'logout'],
                     'permission' => function ($request) {
                         return CurrentUser::authorized();
@@ -57,7 +60,7 @@ class Routes
             'user' => [
                 [
                     'end_point' => 'profile',
-                    'methods' => \WP_REST_Server::READABLE,
+                    'methods' => WP_REST_Server::READABLE,
                     'callback' => [$this, 'profile'],
                     'permission' => function ($request) {
                         return CurrentUser::authorized();
@@ -69,30 +72,22 @@ class Routes
 
     public function login(): void
     {
-        BASE_CONTAINER->call(
-            ['BaseService\Http\Controllers\Public\LoginController', 'login'],
-        );
+        FALCON_CONTAINER->getMethod(LoginController::class, 'login');
     }
 
     public function getToken(): void
     {
-        BASE_CONTAINER->call(
-            ['BaseService\Http\Controllers\Public\LoginController', 'getToken'],
-        );
+        FALCON_CONTAINER->getMethod(LoginController::class, 'getToken');
     }
 
     public function logout(): void
     {
-        BASE_CONTAINER->call(
-            ['BaseService\Http\Controllers\Public\LoginController', 'logout'],
-        );
+        FALCON_CONTAINER->getMethod(LoginController::class, 'logout');
     }
 
     public function profile(): void
     {
-        BASE_CONTAINER->call(
-            ['BaseService\Http\Controllers\Public\UserController', 'profile'],
-        );
+        FALCON_CONTAINER->getMethod(UserController::class, 'profile');
     }
 
 }

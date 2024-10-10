@@ -31,12 +31,12 @@ class FormRequest
         $this->files = $this->prepareFiles($this->raw_request->files);
         $this->queries = $this->prepareQuery($this->raw_request->query);
 
-        $this->request = array_merge($this->req, $this->files, $this->queries);
+        $this->request = \array_merge($this->req, $this->files, $this->queries);
 
         try {
             $this->validate();
         } catch (AuthorizationException $e) {
-            LOGGER->alert(
+            falconLogger()->error(
                 'unAuthorization request!',
                 [
                     'data' => [
@@ -49,7 +49,7 @@ class FormRequest
 
             Response::unauthorized();
         } catch (ValidationException $e) {
-            LOGGER->warning(
+            falconLogger()->warning(
                 'validation-exception',
                 [
                     'data' => [
@@ -70,16 +70,16 @@ class FormRequest
         foreach ($requests as $key => $value) {
             if ($key != 'password' && $key != 'password_confirmation') {
                 $arr = [];
-                if (is_array($value)) {
+                if (\is_array($value)) {
                     foreach ($value as $v) {
-                        $arr[] = trim(sanitize_textarea_field($v));
+                        $arr[] = \trim(sanitize_textarea_field($v));
                     }
                 } else {
-                    $value = trim(sanitize_textarea_field($value));
+                    $value = \trim(sanitize_textarea_field($value));
                 }
             }
 
-            $output[$key] = count($arr) ? $arr : $value;
+            $output[$key] = \count($arr) ? $arr : $value;
         }
 
         return $output;
@@ -107,7 +107,7 @@ class FormRequest
     {
         $output = [];
         foreach ($requests as $key => $value) {
-            $value = trim($value);
+            $value = \trim($value);
             $output[$key] = sanitize_textarea_field($value);
         }
 
@@ -120,7 +120,7 @@ class FormRequest
             throw new AuthorizationException();
         }
 
-        if (is_null($rules)) {
+        if (\is_null($rules)) {
             $rules = !empty($this->rules()) ? $this->rules() : $this->rules;
         }
 
@@ -129,9 +129,9 @@ class FormRequest
 
         if (!empty($rules)) {
             $filesystem = new Filesystem();
-            $loader = new FileLoader($filesystem, plugin_dir_path(__FILE__).'../lang');
+            $loader = new FileLoader($filesystem, plugin_dir_path(__FILE__) . '../lang');
 
-            $loader->addNamespace('lang', plugin_dir_path(__FILE__).'/../lang');
+            $loader->addNamespace('lang', plugin_dir_path(__FILE__) . '/../lang');
             $loader->load(get_locale(), 'validation', 'lang');
             $translator = new Translator($loader, get_locale());
 
@@ -145,7 +145,7 @@ class FormRequest
 
     protected function passesAuthorization(): bool
     {
-        if (method_exists($this, 'authorize')) {
+        if (\method_exists($this, 'authorize')) {
             return $this->authorize();
         }
 

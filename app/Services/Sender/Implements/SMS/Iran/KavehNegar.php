@@ -29,13 +29,13 @@ class KavehNegar implements SMS
                     return true;
                 }
 
-                LOGGER->warning('KavehNegar cant send SMS', ['data' => json_encode($arrayData)]);
+                falconLogger()->warning('KavehNegar cant send SMS', ['data' => json_encode($arrayData)]);
                 return false;
             }
 
             return true;
         } catch (\Exception $exception) {
-            LOGGER->error('KavehNegar cant send SMS', ['exception message' => $exception->getMessage()]);
+            falconLogger()->error('KavehNegar cant send SMS', ['exception message' => $exception->getMessage()]);
             return false;
         }
     }

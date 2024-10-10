@@ -28,7 +28,7 @@ class Extensions implements ValidationRule
                 $valid = false;
             } else {
                 $filename = $item['name'];
-                $extension = last(explode('.', $filename));
+                $extension = last(\explode('.', $filename));
 
                 if (!$this->acceptExtension($extension)) {
                     $valid = false;
@@ -39,7 +39,7 @@ class Extensions implements ValidationRule
         if (!$valid) {
             $fail('validation.media.extension')->translate(
                 [
-                    'extensions' => is_array($this->extensions) ? $this->acceptedExtensionList() : $this->extensions,
+                    'extensions' => \is_array($this->extensions) ? $this->acceptedExtensionList() : $this->extensions,
                 ],
             );
         }
@@ -47,9 +47,9 @@ class Extensions implements ValidationRule
 
     private function acceptExtension(string $e): bool
     {
-        if (is_array($this->extensions)) {
+        if (\is_array($this->extensions)) {
             foreach ($this->extensions as $extension) {
-                if (is_array($extension)) {
+                if (\is_array($extension)) {
                     foreach ($extension as $ext) {
                         if ($ext == $e) {
                             return true;
@@ -71,9 +71,9 @@ class Extensions implements ValidationRule
         $str_extensions = '';
         $counter = 0;
 
-        if (is_array($this->extensions)) {
+        if (\is_array($this->extensions)) {
             foreach ($this->extensions as $extension) {
-                if (is_array($extension)) {
+                if (\is_array($extension)) {
                     foreach ($extension as $item) {
                         $str_extensions .= $item;
                         $counter++;

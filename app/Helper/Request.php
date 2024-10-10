@@ -9,9 +9,9 @@ class Request
         $output = [];
 
         foreach (getallheaders() as $k => $v) {
-            if (is_null($keys)) {
+            if (\is_null($keys)) {
                 $output[$k] = $v;
-            } elseif (is_array($keys)) {
+            } elseif (\is_array($keys)) {
                 foreach ($keys as $key) {
                     if ($key == $k) {
                         $output[$key] = $v;

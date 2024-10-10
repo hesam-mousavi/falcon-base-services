@@ -93,7 +93,7 @@ class CurrentUser
                     return false;
                 } else {
                     $authorization_header_value_array = explode(' ', $authorization_header_value);
-                    $token = end($authorization_header_value_array);
+                    $token = \end($authorization_header_value_array);
                     $decoded_token = JWT::decode($token, new Key($_ENV['JWT_SECRET_KEY'], $_ENV['JWT_ALG']));
 
                     if ($decoded_token->user_id != self::id()) {

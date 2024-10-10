@@ -11,8 +11,12 @@ class Start
         $this->filterHandler();
     }
 
-    public function actionHandler() {}
+    public function actionHandler()
+    {
+    }
 
-    public function filterHandler() {}
+    public function filterHandler()
+    {
+    }
 
 }

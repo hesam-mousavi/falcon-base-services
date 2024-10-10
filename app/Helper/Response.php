@@ -14,7 +14,7 @@ class Response
     public static function json($message = '', $data = null, $status = 200)
     {
         $output['message'] = $message;
-        if (!is_null($data)) {
+        if (!\is_null($data)) {
             $output['data'] = $data;
         }
 

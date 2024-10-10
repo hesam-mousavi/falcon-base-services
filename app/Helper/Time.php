@@ -26,7 +26,7 @@ class Time
             $pattern,
         );
 
-        return $formatter->format(strtotime($dateTime));
+        return $formatter->format(\strtotime($dateTime));
     }
 
     public static function now(\DateTimeZone|string|int|null $time_zone = FALCON_BASE_TIME_ZONE): string

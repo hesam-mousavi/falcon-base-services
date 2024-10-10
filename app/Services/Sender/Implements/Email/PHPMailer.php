@@ -24,18 +24,18 @@ class PHPMailer implements Email
             $this->mail->isHTML(true);
             $this->mail->CharSet = "UTF-8";
         } catch (Exception $e) {
-            LOGGER->error("phpmailer can't initial.", ['exception message' => $this->mail->ErrorInfo]);
+            falconLogger()->error("phpmailer can't initial.", ['exception message' => $this->mail->ErrorInfo]);
         }
     }
 
     public function send($to, $subject, $content, $from = null, $bcc = null): bool
     {
-        $from = is_null($from) ? 'no-reply' : $from;
+        $from = \is_null($from) ? 'no-reply' : $from;
         $this->mail->Username = $from.'@abc.com';
         $this->mail->Password = self::getPass($from);
         $this->mail->setFrom($this->mail->Username);
 
-        if (!is_null($bcc) && is_array($bcc)) {
+        if (!\is_null($bcc) && \is_array($bcc)) {
             foreach ($bcc as $other_mail) {
                 $this->mail->addBCC($other_mail);
             }
@@ -47,7 +47,7 @@ class PHPMailer implements Email
         try {
             $this->mail->send();
         } catch (Exception $e) {
-            LOGGER->error(
+            falconLogger()->error(
                 "phpmailer can't sent email to {$to} from {$this->mail->Username}",
                 ['exception message' => $this->mail->ErrorInfo],
             );

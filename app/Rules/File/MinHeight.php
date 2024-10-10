@@ -14,7 +14,7 @@ class MinHeight implements ValidationRule
         $this->min_height = $min_height;
     }
 
-    public function validate(string $attribute, mixed $value, Closure $fail): void
+    public function validate(string $attribute, mixed $value, \Closure $fail): void
     {
         $valid = true;
         foreach ($value as $item) {

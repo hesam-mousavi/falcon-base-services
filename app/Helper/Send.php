@@ -2,7 +2,6 @@
 
 namespace FalconBaseServices\Helper;
 
-use FalconBaseServices\Services\Sender\Contracts\Email;
 use FalconBaseServices\Services\Sender\Implements\SMS\Iran\KavehNegar;
 
 class Send
@@ -14,7 +13,7 @@ class Send
         if ($with == 'kaveh_negar') {
             return self::withKavehNegar($mobile, $message);
         } else {
-            switch (self::$sms_handlers[rand(0, count(self::$sms_handlers) - 1)]) {
+            switch (self::$sms_handlers[\rand(0, \count(self::$sms_handlers) - 1)]) {
                 case 'kaveh_negar':
                     return self::withKavehNegar($mobile, $message);
             }
@@ -28,6 +27,6 @@ class Send
 
     public static function email($to, $subject, $content, string $from = null, array $bcc = null): bool
     {
-        return BASE_CONTAINER->get(Email::class)->send($to, $subject, $content, $from, $bcc);
+        return falconEmail()->send($to, $subject, $content, $from, $bcc);
     }
 }
