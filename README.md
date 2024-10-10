@@ -87,12 +87,16 @@ To create a service provider, create a class in the `app/providers` folder and e
 All default WordPress tables are available as models in the `app/Model` folder. WooCommerce tables will be added soon. You can use both the powerful Query Builder and Eloquent to interact with these tables.
 - **Eloquent:** <br>
 ```php
-(new \FalconBaseServices\Model\Post())->where('post_type', 'post')->get();
+(new \FalconBaseServices\Model\Post())->published()->with('author')->get();
   ```
   
 - **Query Builder:** <br>
 ```php
-falconDB()::table('wp_posts')->where('post_type', 'post')->get();
+falconDB()::table('wp_posts')
+    ->where('post_status', 'publish')
+    ->leftJoin('wp_users', 'wp_posts.post_author', '=', 'wp_users.ID')
+    ->select('wp_posts.*', 'wp_users.user_nicename')
+    ->get();
 ```
 
 If you want to use a new table as a model, create its class by extending the `FalconBaseServices\Model\BaseModel` class. If the table does not use the default prefix, set `$with_prefix` to false:
