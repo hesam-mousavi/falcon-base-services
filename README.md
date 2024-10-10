@@ -1,159 +1,105 @@
-# About
-This plugin provide some most used services like:
-- laravel QueryBuilder and Eloquent
-- Template Engin(blade , twig)
-- Email(phpMailer)
-- Request
-- Validation
-- Logger(monolog)
-- Login and logout with and without API
-- ENV
-- Scheduler
-- Symfony var-dumper(dd, dump)
-- Carbon
-<br>
-and some Helpers to develop your plugin fast.
+# Falcon Base Services
 
-___
-### #PHP:
+Many WordPress developers long for features like Eloquent, Blade, Service Container, and Service Provider to help them build powerful plugins. Falcon is here to change the game and bring these capabilities to your fingertips.
 
-php >=8.2
+**Please note:** This plugin provides a series of services and is not intended to be used as a base for creating new plugins.
 
-___
-### #Install
+## Features
+- **Powerful Service Container and Service Provider**
+- **Query Builder**
+- **Eloquent**
+- **Template Engine (Blade, Twig)**
+- **Logger (Monolog)**
+- **Email (PHPMailer)**
+- **Laravel Validation**
+- **Request Handling**
+- **Scheduler**
+- **Environment Management**
+- **Symfony Var-Dumper (dd, dump)**
+- **Carbon**
+- **Additional Helpers** to develop your plugin fast.
 
-in **wp-content** directory of wp project, if **mu-plugins** folder not exist, create it and copy this project to this folder.
-<br>then create php file with name that you want in root of mu-plugins and copy below code to this file and save it. 
+**Minimum PHP version: 8.2**
 
-~~~php
-<?php
-require 'wp-base-services/wp-base-services.php';
-~~~
+## Installation
 
-got to **wp-base-services** folder and open terminal and run this code:
-~~~
-composer install
-~~~
+1. **Create Directory:** In the `wp-content` folder, if the `mu-plugins` folder does not exist, create it. Place the `falcon-base-services` folder inside it.
+2. **Create Loader File:** In the root of the `mu-plugins` folder, create a PHP file with a name of your choice and add the following code:
+    ```php
+    <?php
+    require 'falcon-base-services/falcon-base-services.php';
+    ```
+   Note that the contents of the `mu-plugins` folder do not need to be activated in the WordPress admin and are executed before all other plugins. Also, WordPress does not scan the folders inside `mu-plugins` unless explicitly instructed.
 
-if composer not installed in yor system, download it from [composer](https://getcomposer.org/download/) and install.
-then run code.
+3. **Install Dependencies:** Open the terminal in the `falcon-base-services` folder and run the following command:
+    ```sh
+    composer install
+    ```
+   If you haven't installed Composer, you can download and install it from [this link](https://getcomposer.org/).
 
-___
-### #Maintenance
+The plugin is now ready to use. Let’s explore its features and how to use them.
 
-if site need maintenance mode, rename **storage/maintenance1.php** file to **storage/maintenance.php** and write to it want you need.
+## Maintenance Mode
+If you need to put the site in maintenance mode, simply rename the `maintenance.example.php` file in the `storage` folder to `maintenance.php`. You can also edit the contents of the file as needed.
 
-___
-### #env
-with **$_ENV['ITEM']** can access the ITEM key in .env file.
-- if you want to use api for login, please change **JWT_SECRET_KEY** key
+## Environment Variables (ENV)
+You can set your variables in the `.env` file and use them anywhere in your code like this:
+```php
+$_ENV['item'];
+```
 
-___
-### #BASE_CONTAINER
-you can access **BASE_CONTAINER** globally for manage DI(Dependency Injection).
-- if you need create singleton object with DI, use **get()** method.
+## Service Container - Service Provider
+The plugin uses a powerful service container with autowiring capabilities.
+- **Singleton Services:** Register a singleton service using:
+    ```php
+    FALCON_CONTAINER->singleton(Test::class);
+    // or
+    FALCON_CONTAINER->singleton('test', Test::class);
+    ```
 
-~~~php
-$obj = BASE_CONTAINER->get(Template::class);
-~~~
+- **Non-Singleton Services:** Register a non-singleton service using:
+    ```php
+    FALCON_CONTAINER->bind(Test::class);
+    // or
+    FALCON_CONTAINER->bind('test', Test::class);
+    ```
 
-- if you need create object and run one method of this class with DI, use **call()** method.
+- **Using Closures:** You can also use closures:
+    ```php
+    FALCON_CONTAINER->bind('test', function() { return Test::class; });
+    ```
 
-~~~php
-$res = BASE_CONTAINER->call(['BaseService\Http\Controllers\Public\LoginController', 'login']);
-~~~
+- **Using the Services:** Use the `get` method to retrieve the services:
+    ```php
+    FALCON_CONTAINER->get('test');
+    FALCON_CONTAINER->get(Test::class);
+    ```
 
-___
-### #LOGGER
-**LOGGER** use **monolog** package for handle logs and you can access LOGGER globally to manage LoggerInterface methods.<br>
-- if ou want to use other packages, just add it with composer and change <code>bootstrap/config.php</code>
+- **Resolving Methods:** Resolve a method from a class using:
+    ```php
+    FALCON_CONTAINER->getMethod(LoginController::class, 'login');
+    ```
+  This will automatically resolve any dependencies required by both the class and the method.
 
-<p>Example:</p>
+To create a service provider, create a class in the `app/providers` folder and extend the `ServiceProvider` class. Use the `register` and `boot` methods as needed. Then, add the provider’s address in the `providers.php` file located in the `bootstrap` folder.
 
-~~~php
-try{
-    action();
-}catch(Exception $e){
-    LOGGER->alert(
-                'unAuthorization request!',
-                [
-                    'data' => [
-                        'request' => $this->request,
-                        'user' => CurrentUser::summaryProfile(),
-                        'message' => $e->getMessage(),
-                    ],
-                ],
-            );
-}
+## Eloquent, QueryBuilder
+All default WordPress tables are available as models in the `app/Model` folder. WooCommerce tables will be added soon. You can use both the powerful Query Builder and Eloquent to interact with these tables.
+- **Eloquent:** <br>
+```php
+(new \FalconBaseServices\Model\Post())->where('post_type', 'post')->get();
+  ```
+  
+- **Query Builder:** <br>
+```php
+falconDB()::table('wp_posts')->where('post_type', 'post')->get();
+```
 
-~~~
+If you want to use a new table as a model, create its class by extending the `FalconBaseServices\Model\BaseModel` class. If the table does not use the default prefix, set `$with_prefix` to false:
+```php
+protected $with_prefix = false;
+```
 
-- LOGGER save max 30 files and each day logs save to one file.
-- if you want change count of files, change **LOGGER_MAX_FILES** in .env file.
-- if yot need <code>ProcessIdProcessor</code> or <code>GitProcessor</code> or <code>MemoryUsageProcessor</code>, uncomment related lines in <code>app/Services/logger/Monolog.php</code>
-___
-### #TEMPLATE
-for use **Blade** template engin, you can access it globally with **TEMPLATE**.
-- if you want to use **twig**, add it with composer and then change <code>bootstrap/config.php</code>
-<p>Example:</p>
+The rules and usage of models and Query Builder/Eloquent are exactly like the Laravel documentation.
 
-~~~php
-TEMPLATE->setViewDir(__DIR__.'/views')
-     ->setView("tickets") // tickets.blade.php or tickets.twig
-     ->share(['name' => $this->getName()])
-     ->render();
-~~~
-
-___
-### #Email
-if you want to send email, use <code>\BaseService\Helper\Send::email(to, subject, content, from = null, bcc = null);</code>
-email service use [PHPMailer](https://github.com/PHPMailer/PHPMailer/).
-<br> if you want to use another package, add it with composer and change <code>bootstrap/config.php</code>
-<p>email use some env variable like:
-
-- EMAIL_HOST
-- INFO_EMAIL_PASS //if use info@...
-- and ....
-___
-### #SMS
-if you want to send sms, use <code>\BaseService\Helper\Send::sms(receptor, message);</code>
-<p>only one option exist for sms for now, iranian KavehNegar</p>
-
-___
-### #CurrentUser
-use <code>\BaseService\Services\CurrentUser</code> for access some data from current user that logged_in.
-
-___
-### #Helper
-see <code>app/Helper</code> directory. its contain some usefully helpers.
-
-___
-### #Model
-all wp standard tables model created in <code>app/Model</code>.
-<p>if you want to use Model, just do it like laravel eloquent!!!</p>
-Example:
-
-~~~php
-(new \BaseService\Model\Post())->published()->with('author')->get()
-~~~
-
-<p>you want use queryBuilder? it's simple:</p>
-
-~~~php
-use Illuminate\Database\Capsule\Manager as QBuilder;
-
-QBuilder::table('wp_posts')->get();
-~~~
-___
-### #Login | Logout
-some usefully route created for login/logout with ajax or api. please see <code>app/Routes.php</code>
-
-___
-### #Scheduler
-do you use cronjob? No more need to use boring ways in cPanel.<br>
-All you need from now on is that create just one cron in cpanel that check every one minute <code>app/scheduler.php</code> file.<br>
-now with <code>[peppeocchi/php-cron-scheduler](https://github.com/peppeocchi/php-cron-scheduler)</code> package in <code>app/scheduler.php</code> file, write your jobs!!!
-
-___
-### Other packages
-<code>[Carbon](https://carbon.nesbot.com/docs/)</code>, <code>[dd(), dump()](https://symfony.com/doc/current/components/var_dumper.html)</code> accessed globally.
+Happy coding! 🚀
