@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends BaseModel
 {
-
     public $timestamps = false;
-
     protected $table = 'users';
-
     protected $primaryKey = 'ID';
 
     /**

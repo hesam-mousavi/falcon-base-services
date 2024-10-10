@@ -8,9 +8,7 @@ class CommentMeta extends BaseModel
 {
 
     public $timestamps = false;
-
     protected $table = 'commentmeta';
-
     protected $primaryKey = 'meta_id';
 
     /**

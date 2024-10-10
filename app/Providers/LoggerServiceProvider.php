@@ -15,7 +15,7 @@ class LoggerServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->container->singleton('logger', function (){
+        $this->container->singleton('logger', function () {
             $level = Level::Info;
             if (defined('WP_DEBUG') && true === WP_DEBUG) {
                 $level = Level::Debug;
@@ -47,8 +47,5 @@ class LoggerServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot()
-    {
-
-    }
+    public function boot() {}
 }

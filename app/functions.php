@@ -1,4 +1,5 @@
 <?php
+
 function falconLogger()
 {
     return FALCON_CONTAINER->get('logger');

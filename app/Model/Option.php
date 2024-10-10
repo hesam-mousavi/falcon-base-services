@@ -6,9 +6,7 @@ class Option extends BaseModel
 {
 
     public $timestamps = false;
-
     protected $table = 'options';
-
     protected $primaryKey = 'option_id';
 
     /**

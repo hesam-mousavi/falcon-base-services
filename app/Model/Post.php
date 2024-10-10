@@ -6,13 +6,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends BaseModel
 {
-
     const CREATED_AT = 'post_date';
-
     const UPDATED_AT = 'post_modified';
-
     protected $table = 'posts';
-
     protected $primaryKey = 'ID';
 
     /**

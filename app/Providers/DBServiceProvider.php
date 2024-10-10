@@ -42,8 +42,5 @@ class DBServiceProvider extends ServiceProvider
         });
     }
 
-    public function boot()
-    {
-
-    }
+    public function boot() {}
 }

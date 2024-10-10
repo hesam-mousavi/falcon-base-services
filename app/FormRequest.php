@@ -129,9 +129,9 @@ class FormRequest
 
         if (!empty($rules)) {
             $filesystem = new Filesystem();
-            $loader = new FileLoader($filesystem, plugin_dir_path(__FILE__) . '../lang');
+            $loader = new FileLoader($filesystem, plugin_dir_path(__FILE__).'../lang');
 
-            $loader->addNamespace('lang', plugin_dir_path(__FILE__) . '/../lang');
+            $loader->addNamespace('lang', plugin_dir_path(__FILE__).'/../lang');
             $loader->load(get_locale(), 'validation', 'lang');
             $translator = new Translator($loader, get_locale());
 

@@ -113,8 +113,9 @@ class FalconContainer extends Singleton implements ContainerInterface
             dd($exception->getMessage());
         }
 
-        if ($this->shared($id))
+        if ($this->shared($id)) {
             $this->instances[$id] = $resolved;
+        }
 
         return $resolved;
     }
@@ -141,14 +142,15 @@ class FalconContainer extends Singleton implements ContainerInterface
         return $reflectionMethod->invokeArgs($object, $dependencies);
     }
 
-    public function runProviders()
+    public function runProviders(): void
     {
-        $providers = require_once __DIR__ . '/../../bootstrap/providers.php';
+        $providers = require_once __DIR__.'/../../bootstrap/providers.php';
         $provider_instances = [];
 
         foreach ($providers as $provider) {
-            if (\is_subclass_of($provider, ServiceProvider::class))
+            if (\is_subclass_of($provider, ServiceProvider::class)) {
                 $provider_instances[$provider] = new $provider($this);
+            }
         }
 
         foreach ($provider_instances as $instance) {

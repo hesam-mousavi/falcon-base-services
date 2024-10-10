@@ -27,10 +27,7 @@ class MaxSize implements ValidationRule
 
                 if (
                     ($this->type == 'kb' && ($size / 1024) > $this->max_size)
-                    || (
-                        $this->type == 'mb'
-                        && ($size / 1024) / 1024 > $this->max_size
-                    )
+                    || ($this->type == 'mb' && ($size / 1024) / 1024 > $this->max_size)
                 ) {
                     $valid = false;
                 }

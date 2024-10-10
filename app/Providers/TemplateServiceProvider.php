@@ -11,8 +11,5 @@ class TemplateServiceProvider extends ServiceProvider
         $this->container->singleton('template', Blade::class);
     }
 
-    public function boot()
-    {
-
-    }
+    public function boot() {}
 }

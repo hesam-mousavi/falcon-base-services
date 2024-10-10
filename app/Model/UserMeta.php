@@ -8,9 +8,7 @@ class UserMeta extends BaseModel
 {
 
     public $timestamps = false;
-
     protected $table = 'usermeta';
-
     protected $primaryKey = 'umeta_id';
 
 

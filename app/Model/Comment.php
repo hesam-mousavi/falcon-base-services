@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Comment extends BaseModel
 {
-
     public const CREATED_AT = 'comment_date';
     protected $table = 'comments';
     protected $primaryKey = 'comment_ID';

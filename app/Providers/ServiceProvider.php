@@ -11,9 +11,7 @@ class ServiceProvider
         $this->container = $container;
     }
 
-    public function register()
-    {
-    }
+    public function register() {}
 
     public function boot()
     {

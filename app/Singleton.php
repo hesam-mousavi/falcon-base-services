@@ -4,16 +4,13 @@ namespace FalconBaseServices;
 
 class Singleton
 {
-
     private static $instance = null;
 
     /**
      * The Singleton's constructor should always be not public to prevent direct
      * construction calls with the `new` operator.
      */
-    protected function __construct()
-    {
-    }
+    protected function __construct() {}
 
     public static function getInstance()
     {
@@ -37,8 +34,6 @@ class Singleton
     /**
      * Singletons should not be cloneable.
      */
-    protected function __clone()
-    {
-    }
+    protected function __clone() {}
 
 }
