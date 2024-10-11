@@ -43,7 +43,7 @@ The plugin is now ready to use. Let’s explore its features and how to use them
 If you need to put the site in maintenance mode, simply rename the `maintenance.example.php` file in the `storage` folder to `maintenance.php`. You can also edit the contents of the file as needed.
 
 ## Environment Variables (ENV)
-Items mentioned in the <code>.env.example</code> file are important. Rename the file to <code>.env</code>.
+Items mentioned in the `.env.example` file are important. Rename the file to `.env`.
 You can set your variables in the `.env` file and use them anywhere in your code like this:
 ```php
 $_ENV['item'];
@@ -78,14 +78,14 @@ The plugin uses a powerful service container with autowiring capabilities.
 
 - **Resolving Methods:** Resolve a method from a class using:
     ```php
-    FALCON_CONTAINER->getMethod(LoginController::class, 'login');
+    FALCON_CONTAINER->getMethod(Test::class, 'run');
     ```
   This will automatically resolve any dependencies required by both the class and the method.
 
 To create a service provider, create a class in the `app/providers` folder and extend the `ServiceProvider` class. Use the `register` and `boot` methods as needed. Then, add the provider’s address in the `providers.php` file located in the `bootstrap` folder.
 
 ## Eloquent, QueryBuilder
-All default WordPress tables are available as models in the `app/Model` folder. WooCommerce tables will be added soon. You can use both the powerful Query Builder and Eloquent to interact with these tables.
+All default WordPress tables are available as models in the `app/Model` folder. `WooCommerce` tables will be added soon. You can use both the powerful Query Builder and Eloquent to interact with these tables.
 - **Eloquent:** <br>
 ```php
 (new \FalconBaseServices\Model\Post())->published()->with('author')->get();
@@ -113,7 +113,7 @@ By default, Blade is used as the template engine, which is slightly different in
 falconTemplate()->setViewDir('path to dir')->setView('name of file without extension')
 ->share(['item' => 'value'])->render();
 ~~~
-You can also use Twig. The class derived from the interface <code>app/Services/TemplateEngine/Template.php</code> is available in the path <code>app/Services/TemplateEngine/Implements/Twig.php</code>. Simply add Twig to the plugin via Composer and then edit the file <code>app/Providers/TemplateServiceProvider.php</code>.
+You can also use Twig. The class derived from the interface `app/Services/TemplateEngine/Template.php` is available in the path `app/Services/TemplateEngine/Implements/Twig.php`. Simply add Twig to the plugin via Composer and then edit the file `app/Providers/TemplateServiceProvider.php`.
 The usage is similar to the above example.
 
 ## Logger
@@ -121,12 +121,12 @@ To use the logger, use falconLogger():
 ~~~php
 falconLogger()->error('message', ['data' => 'value']);
 ~~~
-If you want the <code>ProcessIdProcessor</code>, <code>GitProcessor</code>, and <code>MemoryUsageProcessor</code> to be included in the log, set related items in .env file to true.
+If you want the `ProcessIdProcessor`, `GitProcessor`, and `MemoryUsageProcessor` to be included in the log, set related items in .env file to true.
 
 ## Email
 To use email, you can use falconEmail():
 ~~~php
 falconEmail()->send($to, $subject, $content, $from = null, $bcc = null);
 ~~~
-For more information on how to use email, refer to the file <code>app/Services/Sender/Implements/Email/PHPMailer.php</code>.
+For more information on how to use email, refer to the file `app/Services/Sender/Implements/Email/PHPMailer.php`.
 <p>Happy coding! 🚀</p>
