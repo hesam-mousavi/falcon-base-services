@@ -43,6 +43,7 @@ The plugin is now ready to use. Let’s explore its features and how to use them
 If you need to put the site in maintenance mode, simply rename the `maintenance.example.php` file in the `storage` folder to `maintenance.php`. You can also edit the contents of the file as needed.
 
 ## Environment Variables (ENV)
+Items mentioned in the <code>.env.example</code> file are important. Rename the file to <code>.env</code>.
 You can set your variables in the `.env` file and use them anywhere in your code like this:
 ```php
 $_ENV['item'];
@@ -120,7 +121,7 @@ To use the logger, use falconLogger():
 ~~~php
 falconLogger()->error('message', ['data' => 'value']);
 ~~~
-If you want the <code>ProcessIdProcessor</code>, <code>GitProcessor</code>, and <code>MemoryUsageProcessor</code> to be included in the log, uncomment lines 26 to 28 of the <code>app/Providers/LoggerServiceProvider.php</code> file.
+If you want the <code>ProcessIdProcessor</code>, <code>GitProcessor</code>, and <code>MemoryUsageProcessor</code> to be included in the log, set related items in .env file to true.
 
 ## Email
 To use email, you can use falconEmail():

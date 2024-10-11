@@ -23,9 +23,15 @@ class LoggerServiceProvider extends ServiceProvider
 
             $logger = new Logger('core');
 
-//        $logger->pushProcessor(new ProcessIdProcessor());
-//        $logger->pushProcessor(new GitProcessor());
-//        $logger->pushProcessor(new MemoryUsageProcessor());
+            if ($_ENV['PROCESS_ID_PROCESSOR']) {
+                $logger->pushProcessor(new ProcessIdProcessor());
+            }
+            if ($_ENV['GIT_PROCESSOR']) {
+                $logger->pushProcessor(new GitProcessor());
+            }
+            if ($_ENV['MEMORY_USAGE_PROCESSOR']) {
+                $logger->pushProcessor(new MemoryUsageProcessor());
+            }
 
             $output = "[%datetime%] %level_name%  : %message% %context% %extra%\n";
             $date_format = "y-M-d H:m:s";
