@@ -106,4 +106,26 @@ protected $with_prefix = false;
 
 The rules and usage of models and Query Builder/Eloquent are exactly like the Laravel documentation.
 
-Happy coding! 🚀
+## Template
+By default, Blade is used as the template engine, which is slightly different in usage from the standard. Pay attention to the example:
+~~~php
+falconTemplate()->setViewDir('path to dir')->setView('name of file without extension')
+->share(['item' => 'value'])->render();
+~~~
+You can also use Twig. The class derived from the interface <code>app/Services/TemplateEngine/Template.php</code> is available in the path <code>app/Services/TemplateEngine/Implements/Twig.php</code>. Simply add Twig to the plugin via Composer and then edit the file <code>app/Providers/TemplateServiceProvider.php</code>.
+The usage is similar to the above example.
+
+## Logger
+To use the logger, use falconLogger():
+~~~php
+falconLogger()->error('message', ['data' => 'value']);
+~~~
+If you want the <code>ProcessIdProcessor</code>, <code>GitProcessor</code>, and <code>MemoryUsageProcessor</code> to be included in the log, uncomment lines 26 to 28 of the <code>app/Providers/LoggerServiceProvider.php</code> file.
+
+## Email
+To use email, you can use falconEmail():
+~~~php
+falconEmail()->send($to, $subject, $content, $from = null, $bcc = null);
+~~~
+For more information on how to use email, refer to the file <code>app/Services/Sender/Implements/Email/PHPMailer.php</code>.
+<p>Happy coding! 🚀</p>
