@@ -11,7 +11,7 @@ class Routes
 {
     use RegisterApiAjax;
 
-    public function __construct()
+    public function register(): void
     {
         $this->registerAjax();
         $this->registerApi();

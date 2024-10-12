@@ -72,4 +72,4 @@ if (!\function_exists('wp_get_current_user')) {
     include_once(ABSPATH."wp-includes/pluggable.php");
 }
 
-new Start();
+(new Start())->run();

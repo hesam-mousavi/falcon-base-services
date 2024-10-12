@@ -4,14 +4,14 @@ namespace FalconBaseServices;
 
 class Start
 {
-    public function __construct()
+    public function run(): void
     {
         add_action('init', [$this, 'init']);
     }
 
     public function init(): void
     {
-        new Routes();
+        (new Routes())->register();
         $this->actions();
         $this->filters();
     }
