@@ -6,13 +6,18 @@ class Start
 {
     public function __construct()
     {
-        new Routes();
-        $this->actionHandler();
-        $this->filterHandler();
+        add_action('init', [$this, 'init']);
     }
 
-    public function actionHandler() {}
+    public function init(): void
+    {
+        new Routes();
+        $this->actions();
+        $this->filters();
+    }
 
-    public function filterHandler() {}
+    public function actions() {}
+
+    public function filters() {}
 
 }
