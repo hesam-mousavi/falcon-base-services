@@ -3,6 +3,7 @@
 namespace FalconBaseServices\Providers;
 
 
+use HesamMousavi\FalconContainer\FalconServiceProvider;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Level;
@@ -11,7 +12,7 @@ use Monolog\Processor\GitProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
 use Monolog\Processor\ProcessIdProcessor;
 
-class LoggerServiceProvider extends ServiceProvider
+class LoggerServiceProvider extends FalconServiceProvider
 {
     public function register()
     {

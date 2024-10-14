@@ -2,9 +2,10 @@
 
 namespace FalconBaseServices\Providers;
 
+use HesamMousavi\FalconContainer\FalconServiceProvider;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class DBServiceProvider extends ServiceProvider
+class DBServiceProvider extends FalconServiceProvider
 {
     public function register()
     {

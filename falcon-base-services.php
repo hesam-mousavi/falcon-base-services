@@ -63,8 +63,8 @@ const BASE_SERVICE_PLUGIN_CACHE_DIR = BASE_SERVICE_PLUGIN_STORAGE_DIR.'/cache/';
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-$container = \FalconBaseServices\Services\FalconContainer::getInstance();
-$container->runProviders();
+$container = \HesamMousavi\FalconContainer\FalconContainer::getInstance();
+$container->runProviders(__DIR__.'/bootstrap/providers.php');
 
 \define('FALCON_CONTAINER', $container);
 
