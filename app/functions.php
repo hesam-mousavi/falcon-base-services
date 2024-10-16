@@ -40,7 +40,7 @@ function falconSetEnv($key, $value): void
 
 function falconConfig($file, $key = null, $folder_path = null)
 {
-    $folder = $folder_path ? rtrim($folder_path, '\\/').DIRECTORY_SEPARATOR : BASE_SERVICE_PLUGIN_CONFIG_DIR;
+    $folder = $folder_path ? rtrim($folder_path, '\\/').DIRECTORY_SEPARATOR : FALCON_BASE_SERVICES_CONFIG_DIR;
     $file = $folder.$file.'.php';
 
     if (file_exists($file)) {

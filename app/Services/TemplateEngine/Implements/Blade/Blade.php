@@ -13,7 +13,7 @@ class Blade implements Template
     public function __construct()
     {
         $this->blade = new BladeExtended(
-            BASE_SERVICE_PLUGIN_VIEWS_DIR, BASE_SERVICE_PLUGIN_CACHE_DIR,
+            FALCON_BASE_SERVICES_VIEWS_DIR, FALCON_BASE_SERVICES_CACHE_DIR,
             BladeOne::MODE_AUTO
         );
     }

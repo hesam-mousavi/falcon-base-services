@@ -43,7 +43,7 @@ class LoggerServiceProvider extends FalconServiceProvider
                 true,  // discard empty Square brackets in the end, default false
             );
 
-            $file_name = BASE_SERVICE_PLUGIN_STORAGE_DIR.'/log/core.log';
+            $file_name = FALCON_BASE_SERVICES_STORAGE_DIR.'/log/core.log';
 
             $rotating_handle = new RotatingFileHandler($file_name, $_ENV['LOGGER_MAX_FILES'], $level);
             $rotating_handle->setFormatter($formatter);

@@ -25,7 +25,7 @@ class Twig implements Template
 
     public function __construct()
     {
-        $this->loader = new FilesystemLoader(BASE_SERVICE_PLUGIN_VIEWS_DIR);
+        $this->loader = new FilesystemLoader(FALCON_BASE_SERVICES_VIEWS_DIR);
     }
 
     public function setViewDir(string $str)
@@ -52,7 +52,7 @@ class Twig implements Template
     public function render()
     {
         $this->twig = new Environment($this->loader, [
-            'cache' => BASE_SERVICE_PLUGIN_CACHE_DIR,
+            'cache' => FALCON_BASE_SERVICES_CACHE_DIR,
             'debug' => true,
         ]);
         $this->twig->addExtension(new DebugExtension());
