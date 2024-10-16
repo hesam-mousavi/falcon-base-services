@@ -56,6 +56,16 @@ To set an item in the global $_ENV var, you can use:
 ~~~php
 setEnv($key, $value);
 ~~~
+
+## Config
+You can also use configuration files in your project that return an array.
+Place the configuration file in the config folder and access the desired values using the `falconConfig($file, $key = null, $folder_path = null)` function.
+
+- `$file`: The name of the configuration file.
+
+- `$key`: The key of the requested array. If null, the entire file content is returned.
+
+- `$folder_path`: By default, the path to the configuration files is in the config folder. If you want to have new configurations in your project, you can also specify the path to the new folder.
 ## Service Container - Service Provider
 The plugin uses a powerful service container with autowiring capabilities.
 - **Singleton Services:** Register a singleton service using:
