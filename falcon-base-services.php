@@ -56,8 +56,8 @@ if (\file_exists($maintenance = __DIR__.'/storage/maintenance.php')) {
 \define("FALCON_BASE_TIME_ZONE", wp_timezone_string());
 
 const BASE_SERVICE_PLUGIN_STORAGE_DIR = FALCON_BASE_SERVICE_PLUGIN_ROOT_DIR.'storage/';
-const BASE_SERVICE_PLUGIN_VIEWS_DIR = BASE_SERVICE_PLUGIN_STORAGE_DIR.'/views/';
-const BASE_SERVICE_PLUGIN_CACHE_DIR = BASE_SERVICE_PLUGIN_STORAGE_DIR.'/cache/';
+const BASE_SERVICE_PLUGIN_VIEWS_DIR = BASE_SERVICE_PLUGIN_STORAGE_DIR.'views'.DIRECTORY_SEPARATOR;
+const BASE_SERVICE_PLUGIN_CACHE_DIR = BASE_SERVICE_PLUGIN_STORAGE_DIR.'cache'.DIRECTORY_SEPARATOR;
 
 //It is better that the .env file in top of public_html folder
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
