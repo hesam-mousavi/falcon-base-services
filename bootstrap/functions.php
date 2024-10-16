@@ -21,7 +21,7 @@ function falconEmail()
 }
 
 
-function falconSetEnv($key, $value): void
+function setEnv($key, $value): void
 {
     $_ENV[$key] = $value;
 }
