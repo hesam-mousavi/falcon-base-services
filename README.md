@@ -44,11 +44,18 @@ If you need to put the site in maintenance mode, simply rename the `maintenance.
 
 ## Environment Variables (ENV)
 Items mentioned in the `.env.example` file are important. Rename the file to `.env`.
+### get
 You can set your variables in the `.env` file and use them anywhere in your code like this:
 ```php
 $_ENV['item'];
+//or
+env('item')
 ```
-
+### set
+To set an item in the global $_ENV var, you can use:
+~~~php
+setEnv($key, $value);
+~~~
 ## Service Container - Service Provider
 The plugin uses a powerful service container with autowiring capabilities.
 - **Singleton Services:** Register a singleton service using:
