@@ -20,18 +20,6 @@ function falconEmail()
     return FALCON_CONTAINER->get('email');
 }
 
-function falconEnv($key = null)
-{
-    if (!is_null($key)) {
-        if (isset($_ENV[$key])) {
-            return $_ENV[$key];
-        }
-
-        return null;
-    }
-
-    return $_ENV;
-}
 
 function falconSetEnv($key, $value): void
 {
