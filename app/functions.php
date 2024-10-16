@@ -20,7 +20,7 @@ function falconEmail()
     return FALCON_CONTAINER->get('email');
 }
 
-function config($file, $key = null, $folder_path = null)
+function falconConfig($file, $key = null, $folder_path = null)
 {
     $folder = $folder_path ? rtrim($folder_path, '\\/').DIRECTORY_SEPARATOR : BASE_SERVICE_PLUGIN_CONFIG_DIR;
     $file = $folder.$file.'.php';
