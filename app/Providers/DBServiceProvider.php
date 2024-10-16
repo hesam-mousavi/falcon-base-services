@@ -7,7 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DBServiceProvider extends FalconServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->container->singleton('db', function () {
             $capsule = new Capsule();

@@ -7,7 +7,7 @@ use HesamMousavi\FalconContainer\FalconServiceProvider;
 
 class EmailServiceProvider extends FalconServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->container->singleton('email', PHPMailer::class);
     }

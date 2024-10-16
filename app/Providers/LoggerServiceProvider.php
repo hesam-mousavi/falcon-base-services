@@ -14,7 +14,7 @@ use Monolog\Processor\ProcessIdProcessor;
 
 class LoggerServiceProvider extends FalconServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->container->singleton('logger', function () {
             $level = Level::Info;

@@ -7,7 +7,7 @@ use HesamMousavi\FalconContainer\FalconServiceProvider;
 
 class TemplateServiceProvider extends FalconServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->container->singleton('template', Blade::class);
     }
