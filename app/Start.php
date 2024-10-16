@@ -11,9 +11,15 @@ class Start
 
     public function init(): void
     {
-        (new Routes())->register();
+        $this->routes();
         $this->actions();
         $this->filters();
+    }
+
+    public function routes(): void
+    {
+        $routes = new Routes();
+        $routes->register();
     }
 
     public function actions() {}
