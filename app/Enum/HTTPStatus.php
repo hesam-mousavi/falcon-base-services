@@ -4,6 +4,8 @@ namespace FalconBaseServices\Enum;
 
 enum HTTPStatus: int
 {
+    use EnumBase;
+
     case OK = 200;
     case CREATED = 201;
     case MOVED_PERMANENTLY = 301;
@@ -17,14 +19,4 @@ enum HTTPStatus: int
     case TOO_MANY_REQUESTS = 429;
     case INTERNAL_SERVER_ERROR = 500;
     case SERVICE_UNAVAILABLE = 503;
-
-    public function label(): string
-    {
-        return static::getLabel($this);
-    }
-
-    public static function getLabel(self $case): string
-    {
-        return ucwords(strtolower(str_replace('_', ' ', $case->name)));
-    }
 }
