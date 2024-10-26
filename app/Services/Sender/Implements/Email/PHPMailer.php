@@ -60,15 +60,11 @@ class PHPMailer implements Email
 
     protected static function getPass($from)
     {
-        switch ($from) {
-            case 'info':
-                return $_ENV['INFO_EMAIL_PASS'];
-            case 'newsletter':
-                return $_ENV['NEWSLETTER_EMAIL_PASS'];
-            case 'support':
-                return $_ENV['SUPPORT_EMAIL_PASS'];
-            default:
-                return $_ENV['NO_REPLY_EMAIL_PASS'];
-        }
+        return match ($from) {
+            'info' => $_ENV['INFO_EMAIL_PASS'],
+            'newsletter' => $_ENV['NEWSLETTER_EMAIL_PASS'],
+            'support' => $_ENV['SUPPORT_EMAIL_PASS'],
+            default => $_ENV['NO_REPLY_EMAIL_PASS'],
+        };
     }
 }
