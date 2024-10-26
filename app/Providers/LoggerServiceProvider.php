@@ -35,7 +35,7 @@ class LoggerServiceProvider extends FalconServiceProvider
             }
 
             $output = "[%datetime%] %level_name%  : %message% %context% %extra%\n";
-            $date_format = "y-M-d H:m:s";
+            $date_format = "y-M-d H:i:s";
             $formatter = new LineFormatter(
                 $output, // Format of message in log
                 $date_format, // Datetime format
