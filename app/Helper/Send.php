@@ -2,27 +2,14 @@
 
 namespace FalconBaseServices\Helper;
 
-use FalconBaseServices\Services\Sender\Implements\SMS\Iran\KavehNegar;
+
+use FalconBaseServices\Services\Sender\Implements\SMS\SMSFactory;
 
 class Send
 {
-    protected static array $sms_handlers = ['kaveh_negar'];
-
-    public static function sms(string $mobile, string $message, $with = null): bool
+    public static function sms(string $mobile, string $message, $with = 'kaveh_negar'): bool
     {
-        if ($with == 'kaveh_negar') {
-            return self::withKavehNegar($mobile, $message);
-        } else {
-            switch (self::$sms_handlers[\rand(0, \count(self::$sms_handlers) - 1)]) {
-                case 'kaveh_negar':
-                    return self::withKavehNegar($mobile, $message);
-            }
-        }
-    }
-
-    protected static function withKavehNegar(string|int $mobile, string $message): bool
-    {
-        return (new KavehNegar())->send($mobile, $message);
+        return (new SMSFactory())->make($with)->send($mobile, $message);
     }
 
     public static function email($to, $subject, $content, string $from = null, array $bcc = null): bool
