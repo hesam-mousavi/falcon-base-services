@@ -24,13 +24,13 @@ class LoggerServiceProvider extends FalconServiceProvider
 
             $logger = new Logger('core');
 
-            if ($_ENV['PROCESS_ID_PROCESSOR']) {
+            if (strtolower($_ENV['PROCESS_ID_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new ProcessIdProcessor());
             }
-            if ($_ENV['GIT_PROCESSOR']) {
+            if (strtolower($_ENV['GIT_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new GitProcessor());
             }
-            if ($_ENV['MEMORY_USAGE_PROCESSOR']) {
+            if (strtolower($_ENV['MEMORY_USAGE_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new MemoryUsageProcessor());
             }
 
