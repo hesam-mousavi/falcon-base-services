@@ -2,6 +2,7 @@
 
 namespace FalconBaseServices;
 
+use Illuminate\Validation\DatabasePresenceVerifier;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use FalconBaseServices\Helper\Response;
 use FalconBaseServices\Exception\AuthorizationException;
@@ -134,8 +135,10 @@ class FormRequest
             $loader->addNamespace('lang', plugin_dir_path(__FILE__).'/../lang');
             $loader->load(get_locale(), 'validation', 'lang');
             $translator = new Translator($loader, get_locale());
-
-            $this->validated = (new Factory($translator))->validate(
+            $presenceVerifier = new DatabasePresenceVerifier(falconDB()->getDatabaseManager());
+            $validator = new Factory($translator);
+            $validator->setPresenceVerifier($presenceVerifier);
+            $this->validated = $validator->validate(
                 $this->request,
                 $rules,
                 $messages,
