@@ -34,7 +34,7 @@ class BaseModel extends Model
     protected function getPrefix(): string
     {
         global $wpdb;
-        return $wpdb->prefix;
+        return $wpdb?->prefix ?? env('TABLE_PREFIX');
     }
 
 }
