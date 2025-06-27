@@ -37,29 +37,23 @@ class FormRequest
         try {
             $this->validate();
         } catch (AuthorizationException $e) {
-            falconLogger()->error(
-                'unAuthorization request!',
-                [
-                    'data' => [
-                        'request' => $this->request,
-                        'user' => CurrentUser::summaryProfile(),
-                        'message' => $e->getMessage(),
-                    ],
+            falconLogger()->error('Unauthorized request!', [
+                'data' => [
+                    'request' => $this->request,
+                    'user' => CurrentUser::summaryProfile(),
+                    'message' => $e->getMessage(),
                 ],
-            );
+            ]);
 
             Response::unauthorized();
         } catch (ValidationException $e) {
-            falconLogger()->warning(
-                'validation-exception',
-                [
-                    'data' => [
-                        'request' => $this->request,
-                        'user' => CurrentUser::summaryProfile(),
-                        'message' => $e->getMessage(),
-                    ],
+            falconLogger()->warning('validation-exception', [
+                'data' => [
+                    'request' => $this->request,
+                    'user' => CurrentUser::summaryProfile(),
+                    'message' => $e->getMessage(),
                 ],
-            );
+            ]);
 
             Response::json(data: ['errors' => $e->errors()], status: $e->status);
         }
@@ -69,38 +63,38 @@ class FormRequest
     {
         $output = [];
         foreach ($requests as $key => $value) {
-            if ($key != 'password' && $key != 'password_confirmation') {
-                $arr = [];
-                if (\is_array($value)) {
+            if ($key !== 'password' && $key !== 'password_confirmation') {
+                if (is_array($value)) {
+                    $sanitized = [];
                     foreach ($value as $v) {
-                        $arr[] = \trim(sanitize_textarea_field($v));
+                        $sanitized[] = trim(sanitize_textarea_field($v));
                     }
+                    $output[$key] = $sanitized;
                 } else {
-                    $value = \trim(sanitize_textarea_field($value));
+                    $output[$key] = trim(sanitize_textarea_field($value));
                 }
+            } else {
+                $output[$key] = $value; // رمز عبور بدون sanitize ذخیره می‌شود
             }
-
-            $output[$key] = \count($arr) ? $arr : $value;
         }
-
         return $output;
     }
 
     private function prepareFiles($files): array
     {
-        $output = [];
-
+        $output = ['files' => []];
         foreach ($files as $key => $file_data) {
-            $output['files'][$key] = [
-                'name' => sanitize_text_field($file_data->getClientOriginalName()),
-                'type' => $file_data->getType(),
-                'size' => $file_data->getSize(),
-                'extension' => $file_data->getClientOriginalExtension(),
-                'path' => $file_data->getPathname(),
-                'mime_type' => $file_data->getMimeType(),
-            ];
+            if ($file_data) {
+                $output['files'][$key] = [
+                    'name' => sanitize_text_field($file_data->getClientOriginalName()),
+                    'type' => $file_data->getType(),
+                    'size' => $file_data->getSize(),
+                    'extension' => $file_data->getClientOriginalExtension(),
+                    'path' => $file_data->getPathname(),
+                    'mime_type' => $file_data->getMimeType(),
+                ];
+            }
         }
-
         return $output;
     }
 
@@ -130,10 +124,10 @@ class FormRequest
 
         if (!empty($rules)) {
             $filesystem = new Filesystem();
-            $loader = new FileLoader($filesystem, plugin_dir_path(__FILE__).'../lang');
+            $langPath = plugin_dir_path(__FILE__) . '../lang';
 
-            $loader->addNamespace('lang', plugin_dir_path(__FILE__).'/../lang');
-            $loader->load(get_locale(), 'validation', 'lang');
+            $loader = new FileLoader($filesystem, $langPath);
+            $loader->addNamespace('lang', $langPath);
             $translator = new Translator($loader, get_locale());
             $presenceVerifier = new DatabasePresenceVerifier(falconDB()->getDatabaseManager());
             $validator = new Factory($translator);
@@ -172,8 +166,9 @@ class FormRequest
 
     public function __get(string $str)
     {
-        return ($this->validated()[$str] ?? null);
+        return $this->validated()[$str] ?? null;
     }
+
 
     public function validated()
     {
