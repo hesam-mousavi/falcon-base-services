@@ -7,21 +7,17 @@ use IntlDateFormatter;
 
 class Time
 {
-    public static function translate(string $dateTime = null, string $pattern = "dd MMMM yyyy", $locale = null): string
+    public static function translate(string $dateTime, string $pattern = "dd MMMM yyyy", $locale = 'fa_IR'): string
     {
-        if (is_null($dateTime)) {
+        if (empty($dateTime)) {
             $dateTime = self::now();
-        }
-
-        if (is_null($locale)) {
-            $locale = get_locale();
         }
 
         $formatter = new IntlDateFormatter(
             $locale,
             IntlDateFormatter::FULL,
             IntlDateFormatter::FULL,
-            'GMT'.FALCON_BASE_TIME_ZONE,
+            FALCON_BASE_TIME_ZONE,
             IntlDateFormatter::TRADITIONAL,
             $pattern,
         );
