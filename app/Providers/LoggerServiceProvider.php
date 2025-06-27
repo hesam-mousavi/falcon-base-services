@@ -24,13 +24,13 @@ class LoggerServiceProvider extends FalconServiceProvider
 
             $logger = new Logger('core');
 
-            if (strtolower($_ENV['PROCESS_ID_PROCESSOR']) == 'true') {
+            if (isset($_ENV['PROCESS_ID_PROCESSOR']) && strtolower($_ENV['PROCESS_ID_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new ProcessIdProcessor());
             }
-            if (strtolower($_ENV['GIT_PROCESSOR']) == 'true') {
+            if (isset($_ENV['GIT_PROCESSOR']) && strtolower($_ENV['GIT_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new GitProcessor());
             }
-            if (strtolower($_ENV['MEMORY_USAGE_PROCESSOR']) == 'true') {
+            if (isset($_ENV['MEMORY_USAGE_PROCESSOR']) && strtolower($_ENV['MEMORY_USAGE_PROCESSOR']) == 'true') {
                 $logger->pushProcessor(new MemoryUsageProcessor());
             }
 
@@ -43,9 +43,9 @@ class LoggerServiceProvider extends FalconServiceProvider
                 true,  // discard empty Square brackets in the end, default false
             );
 
-            $file_name = FALCON_BASE_SERVICES_STORAGE_DIR.'/log/core.log';
-
-            $rotating_handle = new RotatingFileHandler($file_name, $_ENV['LOGGER_MAX_FILES'], $level);
+            $file_name = FALCON_BASE_SERVICES_STORAGE_DIR . '/log/core.log';
+            $max_file = $_ENV['LOGGER_MAX_FILES'] ?? 5;
+            $rotating_handle = new RotatingFileHandler($file_name, $max_file, $level);
             $rotating_handle->setFormatter($formatter);
             $logger->setTimezone(new \DateTimeZone(FALCON_BASE_TIME_ZONE));
             $logger->pushHandler($rotating_handle);
@@ -54,5 +54,7 @@ class LoggerServiceProvider extends FalconServiceProvider
         });
     }
 
-    public function boot() {}
+    public function boot()
+    {
+    }
 }
