@@ -51,7 +51,7 @@ class Extensions implements ValidationRule
             foreach ($this->extensions as $extension) {
                 if (\is_array($extension)) {
                     foreach ($extension as $ext) {
-                        if ($ext == $e) {
+                        if (strtolower($ext) == strtolower($e)) {
                             return true;
                         }
                     }
