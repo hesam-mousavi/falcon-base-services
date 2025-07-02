@@ -8,6 +8,7 @@ enum HTTPStatus: int
 
     case OK = 200;
     case CREATED = 201;
+    case NO_CONTENT = 204;
     case MOVED_PERMANENTLY = 301;
     case NOT_MODIFIED = 304;
     case BAD_REQUEST = 400;
