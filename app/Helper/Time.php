@@ -3,30 +3,34 @@
 namespace FalconBaseServices\Helper;
 
 use Carbon\Carbon;
-use IntlDateFormatter;
 
 class Time
 {
-    public static function translate(string $dateTime, string $pattern = "dd MMMM yyyy", $locale = 'fa_IR'): string
+    public static function translate($datetime, string $pattern = 'dd MMMM yyyy', string $locale = 'fa_IR', string $timezone = FALCON_BASE_TIME_ZONE): string
     {
-        if (empty($dateTime)) {
-            $dateTime = self::now();
+        if (empty($datetime) || !$datetime instanceof \DateTimeInterface) {
+            $datetime = self::now();
         }
 
-        $formatter = new IntlDateFormatter(
-            $locale,
-            IntlDateFormatter::FULL,
-            IntlDateFormatter::FULL,
-            FALCON_BASE_TIME_ZONE,
-            IntlDateFormatter::TRADITIONAL,
-            $pattern,
-        );
+        try {
+            $formatter = new \IntlDateFormatter(
+                $locale,
+                \IntlDateFormatter::FULL,
+                \IntlDateFormatter::FULL,
+                $timezone,
+                \IntlDateFormatter::GREGORIAN,
+                $pattern
+            );
 
-        return $formatter->format(\strtotime($dateTime));
+            return $formatter->format($datetime);
+        } catch (\Exception $e) {
+            logger('Cant Translate Time');
+            return '';
+        }
     }
 
-    public static function now(\DateTimeZone|string|int|null $time_zone = FALCON_BASE_TIME_ZONE): string
+    public static function now(\DateTimeZone|string|null $time_zone = FALCON_BASE_TIME_ZONE): \DateTimeInterface
     {
-        return Carbon::now($time_zone)->toDateTimeString();
+        return Carbon::now($time_zone);
     }
 }
