@@ -6,12 +6,15 @@ use FalconBaseServices\Enum\HTTPStatus;
 
 class Response
 {
-    public static function ok(): void
+    public static function ok($message = '', $data = null): void
     {
-        self::json(status: HTTPStatus::OK->value);
+        if (is_null($data) && empty($message))
+            self::json(status: HTTPStatus::NO_CONTENT->value);
+
+        self::json($message, $data, status: HTTPStatus::OK->value);
     }
 
-    public static function json($message = '', $data = null, $status = 200)
+    public static function json($message = '', $data = null, $status = 200): void
     {
         $output['message'] = $message;
         if (!\is_null($data)) {
@@ -81,5 +84,4 @@ class Response
     {
         self::json(status: HTTPStatus::SERVICE_UNAVAILABLE->value);
     }
-
 }
