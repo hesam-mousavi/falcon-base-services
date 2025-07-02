@@ -14,6 +14,6 @@ class Send
 
     public static function email($to, $subject, $content, string $from = null, array $bcc = null): bool
     {
-        return falconEmail()->send($to, $subject, $content, $from, $bcc);
+        return email()->send($to, $subject, $content, $from, $bcc);
     }
 }

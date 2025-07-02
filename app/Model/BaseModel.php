@@ -12,7 +12,7 @@ class BaseModel extends Model
 
     public function __construct()
     {
-        falconDB();
+        db();
         Parent::__construct();
     }
 

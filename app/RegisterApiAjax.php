@@ -38,7 +38,7 @@ trait RegisterApiAjax
                 }
             }
         } catch (\Exception $exception) {
-            falconLogger()->error(
+            logger()->error(
                 $exception->getMessage(),
                 [
                     'class' => __CLASS__,
@@ -55,7 +55,7 @@ trait RegisterApiAjax
             try {
                 add_action('rest_api_init', [$this, 'restApiInitCallback']);
             } catch (\Exception $exception) {
-                falconLogger()->error(
+                logger()->error(
                     $exception->getMessage(),
                     [
                         'class' => __CLASS__,
@@ -65,7 +65,7 @@ trait RegisterApiAjax
                 );
             }
         } else {
-            falconLogger()->warning(
+            logger()->warning(
                 "apiList() method not exist",
                 [
                     'class' => __CLASS__,

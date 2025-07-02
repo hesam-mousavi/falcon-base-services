@@ -35,7 +35,7 @@ class FileSecurityCheck implements ValidationRule
     private function moreThanOneExtension(): bool
     {
         if (count(explode('.', $this->file['name'])) > 2) {
-            falconLogger()->error(
+            logger()->error(
                 'user attempt to upload file with two extension',
                 ['user' => CurrentUser::user(), 'file' => $this->file],
             );
@@ -64,7 +64,7 @@ class FileSecurityCheck implements ValidationRule
         foreach ($executable_extensions as $executable_extension) {
             if (\str_contains($this->file['name'], '.'.$executable_extension)
             ) {
-                falconLogger()->error(
+                logger()->error(
                     'user attempt to upload file with executable extensions',
                     ['user' => CurrentUser::user(), 'file' => $this->file],
                 );
@@ -88,7 +88,7 @@ class FileSecurityCheck implements ValidationRule
             \str_contains($this->file['name'], '%00')
             || \str_contains($this->file['name'], '\x00')
         ) {
-            falconLogger()->error(
+            logger()->error(
                 'user attempt to upload file with null byte',
                 ['user' => CurrentUser::user(), 'file' => $this->file],
             );
@@ -113,7 +113,7 @@ class FileSecurityCheck implements ValidationRule
 
         foreach ($bad_files as $bad_file) {
             if (\str_contains($this->file['name'], $bad_file)) {
-                falconLogger()->error(
+                logger()->error(
                     'user attempt to upload file with bad file name',
                     ['user' => CurrentUser::user(), 'file' => $this->file],
                 );
@@ -132,7 +132,7 @@ class FileSecurityCheck implements ValidationRule
 
         foreach ($bad_contents as $bad_content) {
             if (\str_contains($content, $bad_content)) {
-                falconLogger()->error(
+                logger()->error(
                     'user attempt to upload file with bad file name',
                     ['user' => CurrentUser::user(), 'file' => $this->file],
                 );

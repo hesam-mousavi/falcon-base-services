@@ -24,7 +24,7 @@ class PHPMailer implements Email
             $this->mail->isHTML(true);
             $this->mail->CharSet = "UTF-8";
         } catch (Exception $e) {
-            falconLogger()->error("phpmailer can't initial.", ['exception message' => $this->mail->ErrorInfo]);
+            logger()->error("phpmailer can't initial.", ['exception message' => $this->mail->ErrorInfo]);
         }
     }
 
@@ -47,7 +47,7 @@ class PHPMailer implements Email
         try {
             $this->mail->send();
         } catch (Exception $e) {
-            falconLogger()->error(
+            logger()->error(
                 "phpmailer can't sent email to {$to} from {$this->mail->Username}",
                 ['exception message' => $this->mail->ErrorInfo],
             );

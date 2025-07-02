@@ -37,7 +37,7 @@ class FormRequest
         try {
             $this->validate();
         } catch (AuthorizationException $e) {
-            falconLogger()->error('Unauthorized request!', [
+            logger()->error('Unauthorized request!', [
                 'data' => [
                     'request' => $this->request,
                     'user' => CurrentUser::summaryProfile(),
@@ -47,7 +47,7 @@ class FormRequest
 
             Response::unauthorized();
         } catch (ValidationException $e) {
-            falconLogger()->warning('validation-exception', [
+            logger()->warning('Validation Exception', [
                 'data' => [
                     'request' => $this->request,
                     'user' => CurrentUser::summaryProfile(),
@@ -129,7 +129,7 @@ class FormRequest
             $loader = new FileLoader($filesystem, $langPath);
             $loader->addNamespace('lang', $langPath);
             $translator = new Translator($loader, get_locale());
-            $presenceVerifier = new DatabasePresenceVerifier(falconDB()->getDatabaseManager());
+            $presenceVerifier = new DatabasePresenceVerifier(db()->getDatabaseManager());
             $validator = new Factory($translator);
             $validator->setPresenceVerifier($presenceVerifier);
             $this->validated = $validator->validate(
