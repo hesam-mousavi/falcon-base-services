@@ -9,7 +9,7 @@ Many WordPress developers long for features like Eloquent, Blade, Service Contai
 - **Query Builder**
 - **Eloquent**
 - **Template Engine (Blade, Twig)**
-- **Logger (Monolog)**
+- **Logger**
 - **Email (PHPMailer)**
 - **Laravel Validation**
 - **Request Handling**
@@ -109,8 +109,9 @@ All default WordPress tables are available as models in the `app/Model` folder. 
   ```
   
 - **Query Builder:** <br>
+
 ```php
-falconDB()::table('wp_posts')
+db()::table('wp_posts')
     ->where('post_status', 'publish')
     ->leftJoin('wp_users', 'wp_posts.post_author', '=', 'wp_users.ID')
     ->select('wp_posts.*', 'wp_users.user_nicename')
@@ -126,24 +127,27 @@ The rules and usage of models and Query Builder/Eloquent are exactly like the La
 
 ## Template
 By default, Blade is used as the template engine, which is slightly different in usage from the standard. Pay attention to the example:
+
 ~~~php
-falconTemplate()->setViewDir('path to dir')->setView('name of file without extension')
+template()->setViewDir('path to dir')->setView('name of file without extension')
 ->share(['item' => 'value'])->render();
 ~~~
 You can also use Twig. The class derived from the interface `app/Services/TemplateEngine/Template.php` is available in the path `app/Services/TemplateEngine/Implements/Twig.php`. Simply add Twig to the plugin via Composer and then edit the file `app/Providers/TemplateServiceProvider.php`.
 The usage is similar to the above example.
 
 ## Logger
-To use the logger, use falconLogger():
+To use the logger, use logger():
+
 ~~~php
-falconLogger()->error('message', ['data' => 'value']);
+logger()->error('message', ['data' => 'value']);
 ~~~
 If you want the `ProcessIdProcessor`, `GitProcessor`, and `MemoryUsageProcessor` to be included in the log, set related items in .env file to true.
 
 ## Email
-To use email, you can use falconEmail():
+To use email, you can use email():
+
 ~~~php
-falconEmail()->send($to, $subject, $content, $from = null, $bcc = null);
+email()->send($to, $subject, $content, $from = null, $bcc = null);
 ~~~
 For more information on how to use email, refer to the file `app/Services/Sender/Implements/Email/PHPMailer.php`.
 <p>Happy coding! 🚀</p>
