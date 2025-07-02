@@ -3,7 +3,7 @@
 /**
  *  Plugin Name: Falcon Base Services
  *  Description: Most Used Base Services And Helper Functions For WordPress
- *  Version: 2.0.0
+ *  Version: 4.0.0
  *  Author: Seyed Hesam Mousavi
  *  License: MIT
  *  License URI: https://opensource.org/licenses/MIT
@@ -17,7 +17,6 @@
  *  - Query Builder: Simplified database queries.
  *  - Eloquent ORM: Object-relational mapping for better data handling.
  *  - Blade-like Template Engine: Powerful templating capabilities.
- *  - Monolog: Comprehensive logging for debugging and monitoring.
  *  - PHPMailer: Easy and flexible email sending capabilities.
  *  - Service Container and Service Provider: Efficient dependency injection and service management.
  *  - Additional Helper Functions: Various utilities to speed up development.
@@ -43,34 +42,34 @@ if (!\defined('ABSPATH')) {
     exit;
 }
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Determine if the application is in maintenance mode...
-if (\file_exists($maintenance = __DIR__.'/storage/maintenance.php')) {
+if (\file_exists($maintenance = __DIR__ . '/storage/maintenance.php')) {
     require $maintenance;
     die();
 }
 
 \define('FALCON_BASE_SERVICES_ROOT_DIR', plugin_dir_path(__FILE__));
 \define('FALCON_BASE_SERVICES_ROOT_URL', plugin_dir_url(__FILE__));
-\define("FALCON_BASE_TIME_ZONE", wp_timezone_string());
+\define("FALCON_BASE_TIME_ZONE", wp_timezone());
 
-const FALCON_BASE_SERVICES_STORAGE_DIR = FALCON_BASE_SERVICES_ROOT_DIR.'storage'.DIRECTORY_SEPARATOR;
-const FALCON_BASE_SERVICES_VIEWS_DIR = FALCON_BASE_SERVICES_STORAGE_DIR.'views'.DIRECTORY_SEPARATOR;
-const FALCON_BASE_SERVICES_CACHE_DIR = FALCON_BASE_SERVICES_STORAGE_DIR.'cache'.DIRECTORY_SEPARATOR;
-const FALCON_BASE_SERVICES_CONFIG_DIR = FALCON_BASE_SERVICES_ROOT_DIR.'config'.DIRECTORY_SEPARATOR;
+const FALCON_BASE_SERVICES_STORAGE_DIR = FALCON_BASE_SERVICES_ROOT_DIR . 'storage' . DIRECTORY_SEPARATOR;
+const FALCON_BASE_SERVICES_VIEWS_DIR = FALCON_BASE_SERVICES_STORAGE_DIR . 'views' . DIRECTORY_SEPARATOR;
+const FALCON_BASE_SERVICES_CACHE_DIR = FALCON_BASE_SERVICES_STORAGE_DIR . 'cache' . DIRECTORY_SEPARATOR;
+const FALCON_BASE_SERVICES_CONFIG_DIR = FALCON_BASE_SERVICES_ROOT_DIR . 'config' . DIRECTORY_SEPARATOR;
 
 //It is better that the .env file in top of public_html folder
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 $container = \HesamMousavi\FalconContainer\FalconContainer::getInstance();
-$container->runProviders(__DIR__.'/bootstrap/providers.php');
+$container->runProviders(__DIR__ . '/bootstrap/providers.php');
 
 \define('FALCON_CONTAINER', $container);
 
 if (!\function_exists('wp_get_current_user')) {
-    include_once(ABSPATH."wp-includes/pluggable.php");
+    include_once(ABSPATH . "wp-includes/pluggable.php");
 }
 
 function startFalcon(): void
